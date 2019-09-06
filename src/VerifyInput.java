@@ -2,7 +2,7 @@ import java.util.List;
 
 class VerifyInput {
 
-    static boolean isNumber(String... list) {
+    boolean isNumber(String... list) {
         try {
             for (String line : list) {
                 Long.parseLong(line);

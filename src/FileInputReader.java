@@ -6,8 +6,9 @@ import java.util.List;
 
 public class FileInputReader implements AutoCloseable {
 
-    static String[] getList(String path) {
-        List<String> list = new ArrayList<String>();
+    String[] getList(String path) {
+
+        List<String> list = new ArrayList<>();
 
         try (BufferedReader reader = new BufferedReader(
                 new FileReader(path))) {
@@ -16,11 +17,11 @@ public class FileInputReader implements AutoCloseable {
             while ((line = reader.readLine()) != null) {
                 list.add(line);
             }
-        } catch (Exception e) {
-            e.printStackTrace();
-            System.out.println("Файл указан неверно и/или не существует");
         }
-
+        catch (IOException e) {
+            System.out.println("Файл указан неверно и/или не существует: " + e);
+            System.exit(0);
+        }
         return list.toArray(new String[0]);
     }
 

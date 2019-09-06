@@ -1,16 +1,18 @@
 import java.io.FileNotFoundException;
+import java.io.IOException;
 import java.io.PrintWriter;
 
 class FileOutputWriter {
 
-    static void write(String path, String[] list) {
+    void write(String path, String[] list) {
 
         try (PrintWriter printWriter = new PrintWriter(path)) {
             for (String line : list) {
                 printWriter.println(line);
             }
-        } catch (FileNotFoundException e) {
-            e.printStackTrace();
+        } catch (IOException e) {
+            System.out.println("Имя выходного файла задано некорректно: "+ e);
+            System.exit(0);
         }
     }
 }

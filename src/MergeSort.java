@@ -4,37 +4,34 @@ import java.util.List;
 
 class MergeSort implements Comparator<String> {
 
-    final String[] merge(String param, String[]... list) {
+    final String[] setAscending(boolean ascending, String[]... list) {
+
         String[] result;
 
         if (list.length > 1) {
-            return reMerge(param, list);
+            return reMerge(ascending, list);
         } else {
             System.out.println("Поскольку входной файл всего 1 - выводим его в исходном виде");
             return new String[]{Arrays.toString(list[0])};
         }
     }
 
-    private String[] reMerge(String param, String[]... args) {
+    private String[] reMerge(boolean ascending, String[]... args) {
+
         String[] end;
 
-        //System.out.println("Входим в метод, кол-во списков для мержа: " + args.length);
-
         if (args.length > 2) {
-//            System.out.println("Количество больше 2, убираем 0 эл-т, мержим хвост");
-            end = reMerge(param, Arrays.copyOfRange(args, 1, args.length));
-//            System.out.println("Хвост смержен");
+            end = reMerge(ascending, Arrays.copyOfRange(args, 1, args.length));
         } else {
-//            System.out.println("Количество = 2, считаем хвостом 1 элемент");
             end = args[1];
         }
-//        System.out.println("Отдаем мержГроу 0й элемент и хвост и возвращаемся из метода");
-        if (param.equals("GrowInt") || param.equals("GrowString")) {
-            return mergeGrow(param, args[0], end);
-        } else return mergeDec(param, args[0], end);
+        if (ascending) {
+            return mergeGrow(args[0], end);
+        } else return mergeDec(args[0], end);
     }
 
-    private String[] mergeGrow(String param, String[] arr1, String[] arr2) {
+    private String[] mergeGrow(String[] arr1, String[] arr2) {
+
         String[] arrayMerge = new String[arr1.length + arr2.length];
         int posA = 0, posB = 0;
 
@@ -53,11 +50,11 @@ class MergeSort implements Comparator<String> {
                 posB++;
             }
         }
-        System.out.println(Arrays.toString(arrayMerge));
         return arrayMerge;
     }
 
-    private String[] mergeDec(String param, String[] arr1, String[] arr2) {
+    private String[] mergeDec(String[] arr1, String[] arr2) {
+
         String[] arrayMerge = new String[arr1.length + arr2.length];
         int posA = arr1.length - 1, posB = arr2.length - 1;
 
@@ -76,13 +73,14 @@ class MergeSort implements Comparator<String> {
                 posB--;
             }
         }
-//        System.out.println(Arrays.toString(arrayMerge));
         return arrayMerge;
     }
 
     @Override
     public int compare(String o1, String o2) {
-        if (VerifyInput.isNumber(o1, o2)) {
+
+        VerifyInput verifyInput = new VerifyInput();
+        if (verifyInput.isNumber(o1, o2)) {
             return new Integer(o1).compareTo(new Integer(o2));
         } else return o1.compareTo(o2);
     }
