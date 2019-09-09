@@ -5,11 +5,14 @@ class Sorter {
 
     Sorter(String[] args, List<String> list, String[][] files) {
 
-        ValidatingProcessor validatingProcessor = new ValidatingProcessor(args);
+        CommandLineProcessor commandLineProcessor = new CommandLineProcessor(args);
         FileOutputWriter fileOutputWriter = new FileOutputWriter();
         MergeSort mergeSort = new MergeSort();
 
-        if (validatingProcessor.is("-d")) {
+        if (commandLineProcessor.is("-s")) {
+            MergeSort.isString = true;
+        }
+        if (commandLineProcessor.is("-d")) {
             fileOutputWriter.write(list.get(list.size() - 1),
                     mergeSort.setAscending(false, files));
         } else {

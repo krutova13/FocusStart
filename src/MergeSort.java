@@ -4,6 +4,8 @@ import java.util.List;
 
 class MergeSort implements Comparator<String> {
 
+    static boolean isString = false;
+
     final String[] setAscending(boolean ascending, String[]... list) {
 
         String[] result;
@@ -79,9 +81,14 @@ class MergeSort implements Comparator<String> {
     @Override
     public int compare(String o1, String o2) {
 
-        VerifyInput verifyInput = new VerifyInput();
-        if (verifyInput.isNumber(o1, o2)) {
-            return new Integer(o1).compareTo(new Integer(o2));
-        } else return o1.compareTo(o2);
+        if (!isString) {
+            try {
+                return new Integer(o1).compareTo(new Integer(o2));
+            } catch (IllegalArgumentException e) {
+                System.out.println("В файл присутствуют некорректные числа");
+                System.exit(0);
+            }
+        }
+        return o1.compareTo(o2);
     }
 }
